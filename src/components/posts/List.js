@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPosts } from 'actions/posts.action';
+import { getPosts, togglePost } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
   posts: state.postReducer.posts,
@@ -25,6 +25,8 @@ class PostList extends Component {
               <td>Verified</td>
               <td>Recommended</td>
               <td>Not Recommended</td>
+              <td>Active</td>
+              <td>Delete</td>
             </tr>
           </thead>
           <tbody>
@@ -38,6 +40,24 @@ class PostList extends Component {
                 <td>{post.verified.toString()}</td>
                 <td>{post.recommended}</td>
                 <td>{post.not_recommended}</td>
+                <td>{post.active.toString()}</td>
+                <td>
+                  {post.active ? (
+                    <button
+                      className='btn btn-danger btn-block'
+                      onClick={() => this.props.togglePost(post.id, false)}
+                    >
+                      Disable
+                    </button>
+                  ) : (
+                    <button
+                      className='btn btn-primary btn-block'
+                      onClick={() => this.props.togglePost(post.id, true)}
+                    >
+                      Enable
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -47,4 +67,4 @@ class PostList extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getPosts })(PostList);
+export default connect(mapStateToProps, { getPosts, togglePost })(PostList);
