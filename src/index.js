@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
 import 'styles/index.css';
 import App from 'components/App';
 import * as serviceWorker from 'helpers/serviceWorker';
@@ -9,9 +10,11 @@ import store from 'store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <App />
-    </ReduxProvider>
+    <HashRouter>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

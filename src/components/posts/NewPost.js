@@ -13,6 +13,11 @@ class NewPost extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     this.props.addPost(this.state);
+    this.setState({
+      required_amount: '',
+      description: '',
+      due_date: '',
+    });
   };
 
   render() {

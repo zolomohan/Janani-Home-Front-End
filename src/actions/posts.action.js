@@ -4,7 +4,7 @@ import { GET_POSTS, POST_ADDED, POST_TOGGLED } from './types';
 
 export const getPosts = () => (dispatch) => {
   axios
-    .get(`${SERVER_URL}/api/posts`)
+    .get(`${SERVER_URL}/api/posts/`)
     .then((res) =>
       dispatch({
         type: GET_POSTS,
