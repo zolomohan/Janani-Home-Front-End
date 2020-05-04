@@ -12,12 +12,13 @@ class PostList extends Component {
   }
   render() {
     return (
-      <div className='container'>
+      <div className='container my-5'>
         <h1>Posts</h1>
-        <table className='table table-stripped table-borderes'>
+        <table className='table table-stripped table-bordered mt-3'>
           <thead>
             <tr>
               <td>ID</td>
+              <td>Description</td>
               <td>Required Amount</td>
               <td>Collected Amount</td>
               <td>Due Date</td>
@@ -30,6 +31,7 @@ class PostList extends Component {
             {this.props.posts.map((post) => (
               <tr key={post.id}>
                 <td>{post.id}</td>
+                <td>{post.description}</td>
                 <td>{post.required_amount}</td>
                 <td>{post.collected_amount}</td>
                 <td>{post.due_date}</td>
