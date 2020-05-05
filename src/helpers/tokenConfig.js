@@ -1,6 +1,5 @@
-export default (getState) => {
-  const token = getState().authReducer.token;
-  console.log(token);
+export default () => {
+  const token = localStorage.getItem('token');
   const config = {
     headers: {
       'Content-Type': 'application/json',

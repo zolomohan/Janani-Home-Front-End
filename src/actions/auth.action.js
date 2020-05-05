@@ -18,7 +18,7 @@ export const loadUser = () => (dispatch, getState) => {
     .then((res) =>
       dispatch({
         type: USER_LOADED,
-        action: res.data,
+        payload: res.data,
       })
     )
     .catch(() => dispatch({ type: AUTH_FAIL }));

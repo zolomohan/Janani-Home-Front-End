@@ -9,9 +9,9 @@ import {
 
 const initialState = () => ({
   user: null,
+  token: null,
   isLoading: false,
   isAuthenticated: false,
-  token: localStorage.getItem('token'),
 });
 
 export default (state = initialState, action) => {
