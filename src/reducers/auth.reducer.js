@@ -7,12 +7,12 @@ import {
   LOGOUT_SUCCESS,
 } from 'actions/types';
 
-const initialState = () => ({
+const initialState = {
   user: null,
-  token: null,
   isLoading: false,
   isAuthenticated: false,
-});
+  token: localStorage.getItem('token'),
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
