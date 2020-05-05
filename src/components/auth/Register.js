@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { registerUser } from 'actions/auth.action';
+import { Redirect } from 'react-router-dom';
 
-export default class Register extends Component {
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+
+class Register extends Component {
   state = {
     email: '',
     username: '',
@@ -10,13 +17,15 @@ export default class Register extends Component {
   onChange = (event) => this.setState({ [event.target.id]: event.target.value });
   onSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state)
+    this.props.registerUser(this.state);
   };
 
   render() {
+    if (this.props.isAuthenticated) return <Redirect to='/' />;
+
     return (
       <div className='container my-5'>
-        <h1>Login</h1>
+        <h1>Register</h1>
         <hr />
         <form className='mt-5' onSubmit={this.onSubmit}>
           <div className='form-group'>
@@ -63,3 +72,5 @@ export default class Register extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, { registerUser })(Register);

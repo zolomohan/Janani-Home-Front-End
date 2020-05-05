@@ -46,7 +46,7 @@ export const registerUser = (credentials) => (dispatch, getState) => {
     .then((res) =>
       dispatch({
         type: REGISTER_SUCCESS,
-        action: res.data,
+        payload: res.data,
       })
     )
     .catch(() => dispatch({ type: AUTH_FAIL }));
