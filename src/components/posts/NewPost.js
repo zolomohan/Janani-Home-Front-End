@@ -18,6 +18,7 @@ class NewPost extends Component {
       description: '',
       due_date: '',
     });
+    this.props.history.push('/')
   };
 
   render() {

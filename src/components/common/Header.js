@@ -14,6 +14,11 @@ class Header extends Component {
         <Link className='navbar-brand' to='/'>
           Janani Home
         </Link>
+        <ul className='navbar-nav ml-auto'>
+          <Link className='nav-link' to='/newpost'>
+            New Post
+          </Link>
+        </ul>
         <button
           className='navbar-toggler'
           type='button'
@@ -30,7 +35,9 @@ class Header extends Component {
           <ul className='navbar-nav ml-auto'>
             {this.props.auth.isAuthenticated ? (
               <Fragment>
-                <li className='nav-item navbar-text'>Welcome, {this.props.auth.user.username}</li>
+                <li className='nav-item navbar-text mr-3'>
+                  Welcome, {this.props.auth.user.username}
+                </li>
                 <li className='nav-item'>
                   <a className='nav-link' onClick={this.props.logoutUser}>
                     Logout

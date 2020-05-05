@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from 'components/common/PrivateRoute';
 import PostList from 'components/posts/List';
 import Header from 'components/common/Header';
 import NewPost from 'components/posts/NewPost';
@@ -18,16 +19,8 @@ export default class App extends Component {
       <Fragment>
         <Header />
         <Switch>
-          <Route
-            exact
-            path='/'
-            render={() => (
-              <Fragment>
-                <NewPost />
-                <PostList />
-              </Fragment>
-            )}
-          />
+          <PrivateRoute exact path='/' component={PostList} />
+          <PrivateRoute exact path='/newpost' component={NewPost} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
         </Switch>
