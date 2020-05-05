@@ -1,3 +1,9 @@
 export const GET_POSTS = 'GET_POSTS';
 export const POST_ADDED = 'POST_ADDED';
 export const POST_TOGGLED = 'POST_TOGGLED';
+export const AUTH_FAIL = 'AUTH_FAIL';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const USER_LOADED = 'USER_LOADED';
+export const USER_LOADING = 'USER_LOADING';
