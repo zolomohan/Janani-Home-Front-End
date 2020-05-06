@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { SERVER_URL } from 'config/server';
-import { config } from 'helpers/ajaxHeaders';
+import header from 'helpers/ajaxHeaders';
 import { GET_POSTS, POST_ADDED, POST_TOGGLED } from 'actions/types';
 
 export const getPosts = () => (dispatch) => {
@@ -12,14 +12,18 @@ export const getPosts = () => (dispatch) => {
 
 export const addPost = (post) => (dispatch) => {
   axios
-    .post(`${SERVER_URL}/api/posts/`, JSON.stringify(post), config)
+    .post(`${SERVER_URL}/api/posts/`, JSON.stringify(post), header.auth())
     .then((res) => dispatch({ type: POST_ADDED, payload: res.data }))
     .catch((err) => console.log(err));
 };
 
 export const togglePost = (id, value) => (dispatch) => {
   axios
-    .patch(`${SERVER_URL}/api/posts/${id}/`, JSON.stringify({ active: value }), config)
+    .patch(
+      `${SERVER_URL}/api/posts/${id}/`,
+      JSON.stringify({ active: value }),
+      header.jsonContent()
+    )
     .then(() => dispatch({ type: POST_TOGGLED, payload: { id, value } }))
     .catch((err) => console.log(err));
 };

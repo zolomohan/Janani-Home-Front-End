@@ -1,11 +1,17 @@
-export const config = {
+const jsonContentHeader = () => ({
   headers: {
     'Content-Type': 'application/json',
   },
-};
+});
 
-export const authHeader = (getState) => {
-  const token = getState().authReducer.token;
+const authHeader = () => {
+  const config = jsonContentHeader();
+  const token = localStorage.getItem('token');
   if (token) config.headers['Authorization'] = `Token ${token}`;
   return config;
 };
+
+export default {
+  auth: authHeader,
+  jsonContent: jsonContentHeader
+}
