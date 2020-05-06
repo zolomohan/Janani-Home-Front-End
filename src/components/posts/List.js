@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getPosts, togglePost } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
@@ -36,7 +37,7 @@ class PostList extends Component {
               <tr key={post.id}>
                 <td>{post.id}</td>
                 <td>{post.owner}</td>
-                <td>{post.title}</td>
+                <td><Link to={`/post/${post.id}`}>{post.title}</Link></td>
                 <td>{post.description}</td>
                 <td>{post.required_amount}</td>
                 <td>{post.collected_amount}</td>
