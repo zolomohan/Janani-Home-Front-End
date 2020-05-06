@@ -18,6 +18,8 @@ class PostList extends Component {
           <thead>
             <tr>
               <td>ID</td>
+              <td>User</td>
+              <td>Title</td>
               <td>Description</td>
               <td>Required Amount</td>
               <td>Collected Amount</td>
@@ -33,6 +35,8 @@ class PostList extends Component {
             {this.props.posts.map((post) => (
               <tr key={post.id}>
                 <td>{post.id}</td>
+                <td>{post.owner}</td>
+                <td>{post.title}</td>
                 <td>{post.description}</td>
                 <td>{post.required_amount}</td>
                 <td>{post.collected_amount}</td>

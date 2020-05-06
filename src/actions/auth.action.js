@@ -20,7 +20,7 @@ export const loadUser = () => (dispatch) => {
 
 export const loginUser = (credentials) => (dispatch) => {
   axios
-    .post(`${SERVER_URL}/api/auth/login`, JSON.stringify({ ...credentials }), header.jsonContent())
+    .post(`${SERVER_URL}/api/auth/login`, JSON.stringify(credentials), header.jsonContent())
     .then((res) => dispatch({ type: LOGIN_SUCCESS, payload: res.data }))
     .catch(() => dispatch({ type: AUTH_FAIL }));
 };
@@ -29,7 +29,7 @@ export const registerUser = (credentials) => (dispatch) => {
   axios
     .post(
       `${SERVER_URL}/api/auth/register`,
-      JSON.stringify({ ...credentials }),
+      JSON.stringify(credentials),
       header.jsonContent()
     )
     .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))

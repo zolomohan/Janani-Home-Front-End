@@ -15,10 +15,13 @@ class Header extends Component {
           Janani Home
         </Link>
         <ul className='navbar-nav ml-auto'>
-          <Link className='nav-link' to='/newpost'>
-            New Post
-          </Link>
+          {this.props.auth.isAuthenticated && (
+            <Link className='nav-link' to='/post/new'>
+              New Post
+            </Link>
+          )}
         </ul>
+
         <button
           className='navbar-toggler'
           type='button'

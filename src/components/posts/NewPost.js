@@ -4,9 +4,10 @@ import { addPost } from 'actions/posts.action';
 
 class NewPost extends Component {
   state = {
-    required_amount: '',
-    description: '',
+    title: '',
     due_date: '',
+    description: '',
+    required_amount: '',
   };
 
   onChange = (event) => this.setState({ [event.target.id]: event.target.value });
@@ -14,9 +15,10 @@ class NewPost extends Component {
     event.preventDefault();
     this.props.addPost(this.state);
     this.setState({
-      required_amount: '',
-      description: '',
+      title: '',
       due_date: '',
+      description: '',
+      required_amount: '',
     });
     this.props.history.push('/')
   };
@@ -27,6 +29,17 @@ class NewPost extends Component {
         <h1>New Post</h1>
         <hr />
         <form onSubmit={this.onSubmit}>
+          <div className='form-group'>
+            <label htmlFor='title' className='lead'>
+              Title
+            </label>
+            <input
+              id='title'
+              className='form-control'
+              onChange={this.onChange}
+              value={this.state.title}
+            />
+          </div>
           <div className='form-group'>
             <label htmlFor='required_amount' className='lead'>
               Required Amount

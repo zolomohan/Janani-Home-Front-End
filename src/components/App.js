@@ -20,7 +20,7 @@ export default class App extends Component {
         <Header />
         <Switch>
           <PrivateRoute exact path='/' component={PostList} />
-          <PrivateRoute exact path='/newpost' component={NewPost} />
+          <PrivateRoute exact path='/post/new' component={NewPost} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
         </Switch>
