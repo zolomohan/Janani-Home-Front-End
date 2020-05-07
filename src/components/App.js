@@ -9,11 +9,10 @@ import Login from 'components/auth/Login';
 import Register from 'components/auth/Register';
 import Post from 'components/posts/Post';
 import { loadUser } from 'actions/auth.action';
-import { getPosts } from 'actions/posts.action';
-import store from 'store';
+import { getPostList } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
-  posts: state.postReducer.posts,
+  posts: state.postReducer.postList,
 });
 
 class App extends Component {
@@ -29,14 +28,8 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={PostList} />
-          <Route
-            exact
-            path='/post/:postId'
-            render={(route) => (
-              <Post post={this.props.posts.find((post) => post.id == route.match.params.postId)} />
-            )}
-          />
           <PrivateRoute exact path='/post/new' component={NewPost} />
+          <Route exact path='/post/:postId' component={Post} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
         </Switch>
@@ -45,4 +38,4 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getPosts, loadUser })(App);
+export default connect(mapStateToProps, { getPosts: getPostList, loadUser })(App);

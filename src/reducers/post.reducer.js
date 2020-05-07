@@ -1,25 +1,31 @@
-import { GET_POSTS, POST_ADDED, POST_TOGGLED } from 'actions/types';
+import { GET_POST, GET_POSTLIST, POST_ADDED, POST_TOGGLED } from 'actions/types';
 
 const initialState = {
-  posts: [],
+  post: null,
+  postList: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_POSTS:
+    case GET_POST:
       return {
         ...state,
-        posts: action.payload,
+        post: action.payload,
+      };
+    case GET_POSTLIST:
+      return {
+        ...state,
+        postList: action.payload,
       };
     case POST_ADDED:
       return {
         ...state,
-        posts: [...state.posts, action.payload],
+        postList: [...state.postList, action.payload],
       };
     case POST_TOGGLED:
       return {
         ...state,
-        posts: state.posts.map((post) =>
+        postList: state.postList.map((post) =>
           post.id === action.payload.id
             ? {
                 ...post,

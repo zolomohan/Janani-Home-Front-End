@@ -1,12 +1,19 @@
 import axios from 'axios';
 import { SERVER_URL } from 'config/server';
 import header from 'helpers/ajaxHeaders';
-import { GET_POSTS, POST_ADDED, POST_TOGGLED } from 'actions/types';
+import { GET_POST, GET_POSTLIST, POST_ADDED, POST_TOGGLED } from 'actions/types';
 
-export const getPosts = () => (dispatch) => {
+export const getPost = (id) => (dispatch) => {
+  axios
+    .get(`${SERVER_URL}/api/posts/${id}/`)
+    .then((res) => dispatch({ type: GET_POST, payload: res.data }))
+    .catch(err => console.log(err));
+};
+
+export const getPostList = () => (dispatch) => {
   axios
     .get(`${SERVER_URL}/api/posts/`)
-    .then((res) => dispatch({ type: GET_POSTS, payload: res.data }))
+    .then((res) => dispatch({ type: GET_POSTLIST, payload: res.data }))
     .catch((err) => console.log(err));
 };
 

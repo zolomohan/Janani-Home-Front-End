@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { togglePost } from 'actions/posts.action';
+import { togglePost, getPost } from 'actions/posts.action';
+
+const mapStateToProps = (state) => ({
+  post: state.postReducer.post,
+});
 
 class Post extends Component {
+  componentDidMount() {
+    this.props.getPost(this.props.match.params.postId);
+  }
+
   render() {
     const { post, togglePost } = this.props;
     return post ? (
@@ -30,4 +38,4 @@ class Post extends Component {
   }
 }
 
-export default connect(null, { togglePost })(Post);
+export default connect(mapStateToProps, { togglePost, getPost })(Post);

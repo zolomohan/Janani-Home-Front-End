@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getPosts, togglePost } from 'actions/posts.action';
+import { getPostList, togglePost } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
-  posts: state.postReducer.posts,
+  posts: state.postReducer.postList,
 });
 
 class PostList extends Component {
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getPostList();
   }
   render() {
     return (
@@ -72,4 +72,4 @@ class PostList extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getPosts, togglePost })(PostList);
+export default connect(mapStateToProps, { getPostList, togglePost })(PostList);
