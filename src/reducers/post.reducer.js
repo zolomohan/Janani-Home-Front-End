@@ -26,10 +26,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         postList: state.postList.map((post) =>
-          post.id === action.payload.id
+          post.id === action.payload
             ? {
                 ...post,
-                active: action.payload.value,
+                active: !post.active,
               }
             : post
         ),

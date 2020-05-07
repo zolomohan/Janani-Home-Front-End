@@ -7,7 +7,7 @@ export const getPost = (id) => (dispatch) => {
   axios
     .get(`${SERVER_URL}/api/posts/${id}/`)
     .then((res) => dispatch({ type: GET_POST, payload: res.data }))
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 export const getPostList = () => (dispatch) => {
@@ -24,13 +24,9 @@ export const addPost = (post) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const togglePost = (id, value) => (dispatch) => {
+export const togglePost = (id) => (dispatch) => {
   axios
-    .patch(
-      `${SERVER_URL}/api/posts/${id}/`,
-      JSON.stringify({ active: value }),
-      header.auth()
-    )
-    .then(() => dispatch({ type: POST_TOGGLED, payload: { id, value } }))
+    .post(`${SERVER_URL}/api/posts/${id}/toggle/`, null, header.auth())
+    .then(() => dispatch({ type: POST_TOGGLED, payload: id }))
     .catch((err) => console.log(err));
 };
