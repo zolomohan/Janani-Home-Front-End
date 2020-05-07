@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getPostList, togglePost } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
+  auth: state.authReducer,
   posts: state.postReducer.postList,
 });
 
@@ -12,6 +13,7 @@ class PostList extends Component {
     this.props.getPostList();
   }
   render() {
+    const { auth, posts, togglePost } = this.props;
     return (
       <div className='container my-5'>
         <h1>Posts</h1>
@@ -29,15 +31,17 @@ class PostList extends Component {
               <td>Recommended</td>
               <td>Not Recommended</td>
               <td>Active</td>
-              <td>Delete</td>
+              <td>Disable</td>
             </tr>
           </thead>
           <tbody>
-            {this.props.posts.map((post) => (
+            {posts.map((post) => (
               <tr key={post.id}>
                 <td>{post.id}</td>
                 <td>{post.owner}</td>
-                <td><Link to={`/post/${post.id}`}>{post.title}</Link></td>
+                <td>
+                  <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </td>
                 <td>{post.description}</td>
                 <td>{post.required_amount}</td>
                 <td>{post.collected_amount}</td>
@@ -46,22 +50,25 @@ class PostList extends Component {
                 <td>{post.recommended}</td>
                 <td>{post.not_recommended}</td>
                 <td>{post.active.toString()}</td>
+
                 <td>
-                  {post.active ? (
-                    <button
-                      className='btn btn-danger btn-block'
-                      onClick={() => this.props.togglePost(post.id, false)}
-                    >
-                      Disable
-                    </button>
-                  ) : (
-                    <button
-                      className='btn btn-primary btn-block'
-                      onClick={() => this.props.togglePost(post.id, true)}
-                    >
-                      Enable
-                    </button>
-                  )}
+                  {auth.user && auth.user.id === post.owner ? (
+                    post.active ? (
+                      <button
+                        className='btn btn-danger btn-block'
+                        onClick={() => togglePost(post.id, false)}
+                      >
+                        Disable
+                      </button>
+                    ) : (
+                      <button
+                        className='btn btn-primary btn-block'
+                        onClick={() => togglePost(post.id, true)}
+                      >
+                        Enable
+                      </button>
+                    )
+                  ) : null}
                 </td>
               </tr>
             ))}

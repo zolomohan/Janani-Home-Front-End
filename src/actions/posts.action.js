@@ -29,7 +29,7 @@ export const togglePost = (id, value) => (dispatch) => {
     .patch(
       `${SERVER_URL}/api/posts/${id}/`,
       JSON.stringify({ active: value }),
-      header.jsonContent()
+      header.auth()
     )
     .then(() => dispatch({ type: POST_TOGGLED, payload: { id, value } }))
     .catch((err) => console.log(err));

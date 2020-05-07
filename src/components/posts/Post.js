@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { togglePost, getPost } from 'actions/posts.action';
 
 const mapStateToProps = (state) => ({
+  auth: state.authReducer,
   post: state.postReducer.post,
 });
 
@@ -12,7 +13,7 @@ class Post extends Component {
   }
 
   render() {
-    const { post, togglePost } = this.props;
+    const { post, auth, togglePost } = this.props;
     return post ? (
       <div className='container my-5'>
         <h1>{post.title}</h1>
@@ -24,15 +25,17 @@ class Post extends Component {
         <p className='lead'>Verified: {post.verified.toString()}</p>
         <p className='lead'>Recommended: {post.recommended}</p>
         <p className='lead'>Not Recommended: {post.not_recommended}</p>
-        {post.active ? (
-          <button className='btn btn-danger' onClick={() => togglePost(post.id, false)}>
-            Disable
-          </button>
-        ) : (
-          <button className='btn btn-primary' onClick={() => togglePost(post.id, true)}>
-            Enable
-          </button>
-        )}
+        {auth.user && auth.user.id === post.owner ? (
+          post.active ? (
+            <button className='btn btn-danger' onClick={() => togglePost(post.id, false)}>
+              Disable
+            </button>
+          ) : (
+            <button className='btn btn-primary' onClick={() => togglePost(post.id, true)}>
+              Enable
+            </button>
+          )
+        ) : null}
       </div>
     ) : null;
   }
