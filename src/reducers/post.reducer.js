@@ -7,12 +7,14 @@ import {
   POST_DISLIKED,
   POST_REMOVELIKE,
   POST_REMOVEDISLIKE,
+  GET_LIKESTATUS,
+  GET_LIKECOUNT,
 } from 'actions/types';
 
 const initialState = {
   post: {
     liked: false,
-    disliked: false
+    disliked: false,
   },
   postList: [],
 };
@@ -46,7 +48,7 @@ export default (state = initialState, action) => {
                 ...state.post,
                 active: !state.post.active,
               }
-            : null,
+            : state.post,
         postList: state.postList.map((post) =>
           post.id === action.payload
             ? {
@@ -63,6 +65,8 @@ export default (state = initialState, action) => {
           ...state.post,
           liked: true,
           disliked: false,
+          likes: state.post.likes + 1,
+          dislikes: state.post.dislikes > 0 ? state.post.dislikes - 1 : state.post.dislikes,
         },
       };
     case POST_DISLIKED:
@@ -72,6 +76,8 @@ export default (state = initialState, action) => {
           ...state.post,
           liked: false,
           disliked: true,
+          likes: state.post.likes > 0 ? state.post.likes - 1 : state.post.likes,
+          dislikes: state.post.dislikes + 1,
         },
       };
     case POST_REMOVELIKE:
@@ -79,6 +85,7 @@ export default (state = initialState, action) => {
         ...state,
         post: {
           ...state.post,
+          likes: state.post.likes - 1,
           liked: false,
         },
       };
@@ -87,9 +94,26 @@ export default (state = initialState, action) => {
         ...state,
         post: {
           ...state.post,
-          disliked: false
-        }
-      }
+          dislikes: state.post.dislikes - 1,
+          disliked: false,
+        },
+      };
+    case GET_LIKESTATUS:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          ...action.payload,
+        },
+      };
+    case GET_LIKECOUNT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          ...action.payload,
+        },
+      };
     default:
       return state;
   }

@@ -10,6 +10,8 @@ import {
   POST_DISLIKED,
   POST_REMOVELIKE,
   POST_REMOVEDISLIKE,
+  GET_LIKESTATUS,
+  GET_LIKECOUNT,
 } from 'actions/types';
 
 export const getPost = (id) => (dispatch) => {
@@ -40,6 +42,13 @@ export const togglePost = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const getLikeStatus = (id) => (dispatch) => {
+  axios
+    .get(`${SERVER_URL}/api/posts/${id}/likestatus/`, header.auth())
+    .then((res) => dispatch({ type: GET_LIKESTATUS, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
 export const likePost = (id) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/posts/${id}/like/`, null, header.auth())
@@ -58,9 +67,17 @@ export const removeLike = (id) => (dispatch) => {
     .then(() => dispatch({ type: POST_REMOVELIKE, payload: id }))
     .catch((err) => console.log(err));
 };
+
 export const removeDislike = (id) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/posts/${id}/removedislike/`, null, header.auth())
     .then(() => dispatch({ type: POST_REMOVEDISLIKE, payload: id }))
+    .catch((err) => console.log(err));
+};
+
+export const getLikeCount = (id) => (dispatch) => {
+  axios
+    .get(`${SERVER_URL}/api/posts/${id}/likecount/`, header.auth())
+    .then((res) => dispatch({ type: GET_LIKECOUNT, payload: res.data }))
     .catch((err) => console.log(err));
 };
