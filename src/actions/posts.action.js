@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { SERVER_URL } from 'config/server';
 import header from 'helpers/ajaxHeaders';
-import { GET_POST, GET_POSTLIST, POST_ADDED, POST_TOGGLED } from 'actions/types';
+import {
+  GET_POST,
+  GET_POSTLIST,
+  POST_ADDED,
+  POST_TOGGLED,
+  POST_LIKED,
+  POST_DISLIKED,
+  POST_REMOVELIKE,
+  POST_REMOVEDISLIKE,
+} from 'actions/types';
 
 export const getPost = (id) => (dispatch) => {
   axios
@@ -28,5 +37,30 @@ export const togglePost = (id) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/posts/${id}/toggle/`, null, header.auth())
     .then(() => dispatch({ type: POST_TOGGLED, payload: id }))
+    .catch((err) => console.log(err));
+};
+
+export const likePost = (id) => (dispatch) => {
+  axios
+    .post(`${SERVER_URL}/api/posts/${id}/like/`, null, header.auth())
+    .then(() => dispatch({ type: POST_LIKED, payload: id }))
+    .catch((err) => console.log(err));
+};
+export const dislikePost = (id) => (dispatch) => {
+  axios
+    .post(`${SERVER_URL}/api/posts/${id}/dislike/`, null, header.auth())
+    .then(() => dispatch({ type: POST_DISLIKED, payload: id }))
+    .catch((err) => console.log(err));
+};
+export const removeLike = (id) => (dispatch) => {
+  axios
+    .post(`${SERVER_URL}/api/posts/${id}/removelike/`, null, header.auth())
+    .then(() => dispatch({ type: POST_REMOVELIKE, payload: id }))
+    .catch((err) => console.log(err));
+};
+export const removeDislike = (id) => (dispatch) => {
+  axios
+    .post(`${SERVER_URL}/api/posts/${id}/removedislike/`, null, header.auth())
+    .then(() => dispatch({ type: POST_REMOVEDISLIKE, payload: id }))
     .catch((err) => console.log(err));
 };
