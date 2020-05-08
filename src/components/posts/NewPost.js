@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPost } from 'actions/posts.action';
+import { addPost } from 'actions/posts/posts.action';
 
 class NewPost extends Component {
   state = {

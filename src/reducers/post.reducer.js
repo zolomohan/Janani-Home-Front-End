@@ -1,15 +1,4 @@
-import {
-  GET_POST,
-  GET_POSTLIST,
-  POST_ADDED,
-  POST_TOGGLED,
-  POST_LIKED,
-  POST_DISLIKED,
-  POST_REMOVELIKE,
-  POST_REMOVEDISLIKE,
-  GET_LIKESTATUS,
-  GET_LIKECOUNT,
-} from 'actions/types';
+import { POST } from 'actions/types';
 
 const initialState = {
   post: {
@@ -21,7 +10,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_POST:
+    case POST.GET:
       return {
         ...state,
         post: {
@@ -29,17 +18,20 @@ export default (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case GET_POSTLIST:
+
+    case POST.LIST:
       return {
         ...state,
         postList: action.payload,
       };
-    case POST_ADDED:
+
+    case POST.ADD:
       return {
         ...state,
         postList: [...state.postList, action.payload],
       };
-    case POST_TOGGLED:
+
+    case POST.TOGGLE:
       return {
         ...state,
         post:
@@ -58,7 +50,8 @@ export default (state = initialState, action) => {
             : post
         ),
       };
-    case POST_LIKED:
+
+    case POST.LIKES.LIKE:
       return {
         ...state,
         post: {
@@ -69,7 +62,8 @@ export default (state = initialState, action) => {
           dislikes: state.post.dislikes > 0 ? state.post.dislikes - 1 : state.post.dislikes,
         },
       };
-    case POST_DISLIKED:
+
+    case POST.LIKES.DISLIKE:
       return {
         ...state,
         post: {
@@ -80,7 +74,8 @@ export default (state = initialState, action) => {
           dislikes: state.post.dislikes + 1,
         },
       };
-    case POST_REMOVELIKE:
+
+    case POST.LIKES.REMOVELIKE:
       return {
         ...state,
         post: {
@@ -89,7 +84,8 @@ export default (state = initialState, action) => {
           liked: false,
         },
       };
-    case POST_REMOVEDISLIKE:
+
+    case POST.LIKES.REMOVEDISLIKE:
       return {
         ...state,
         post: {
@@ -98,7 +94,8 @@ export default (state = initialState, action) => {
           disliked: false,
         },
       };
-    case GET_LIKESTATUS:
+
+    case POST.LIKES.USERPOSTSTATUS:
       return {
         ...state,
         post: {
@@ -106,7 +103,8 @@ export default (state = initialState, action) => {
           ...action.payload,
         },
       };
-    case GET_LIKECOUNT:
+
+    case POST.LIKES.LIKECOUNT:
       return {
         ...state,
         post: {
@@ -114,6 +112,7 @@ export default (state = initialState, action) => {
           ...action.payload,
         },
       };
+      
     default:
       return state;
   }

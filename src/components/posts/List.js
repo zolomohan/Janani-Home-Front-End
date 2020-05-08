@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getPostList, togglePost } from 'actions/posts.action';
+import { getPostList, togglePost } from 'actions/posts/posts.action';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,

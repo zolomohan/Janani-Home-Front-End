@@ -9,7 +9,7 @@ import Login from 'components/auth/Login';
 import Register from 'components/auth/Register';
 import Post from 'components/posts/Post';
 import { loadUser } from 'actions/auth.action';
-import { getPostList } from 'actions/posts.action';
+import { getPostList } from 'actions/posts/posts.action';
 
 const mapStateToProps = (state) => ({
   posts: state.postReducer.postList,

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { togglePost, getPost } from 'actions/posts/posts.action';
 import {
-  togglePost,
-  getPost,
   likePost,
   dislikePost,
   removeLike,
   removeDislike,
-  getLikeStatus,
-  getLikeCount
-} from 'actions/posts.action';
+  getUserPostLikeStatus,
+  getLikeCount,
+} from 'actions/posts/likes.action';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,
@@ -23,15 +22,15 @@ const mapActionToProps = {
   dislikePost,
   removeLike,
   removeDislike,
-  getLikeStatus,
-  getLikeCount
+  getUserPostLikeStatus,
+  getLikeCount,
 };
 
 class Post extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
-    this.props.getLikeStatus(this.props.match.params.postId);
     this.props.getLikeCount(this.props.match.params.postId);
+    this.props.getUserPostLikeStatus(this.props.match.params.postId);
   }
 
   render() {
