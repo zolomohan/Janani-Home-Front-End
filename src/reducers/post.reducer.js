@@ -4,6 +4,7 @@ const initialState = {
   post: {
     liked: false,
     disliked: false,
+    comments: [],
   },
   postList: [],
 };
@@ -50,6 +51,8 @@ export default (state = initialState, action) => {
             : post
         ),
       };
+
+    // Likes
 
     case POST.LIKES.LIKE:
       return {
@@ -116,6 +119,28 @@ export default (state = initialState, action) => {
         },
       };
 
+    // Comments
+
+    case POST.COMMENT.LIST:
+      return {
+        ...state,
+        post: { ...state.post, comments: action.payload },
+      };
+
+    case POST.COMMENT.ADD:
+      return {
+        ...state,
+        post: { ...state.post, comments: [...state.post.comments, action.payload] },
+      };
+
+    case POST.COMMENT.DISABLE:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter((comment) => comment.id != action.payload),
+        },
+      };
     default:
       return state;
   }

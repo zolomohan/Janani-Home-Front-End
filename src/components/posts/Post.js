@@ -9,6 +9,7 @@ import {
   getUserPostLikeStatus,
   getLikeCount,
 } from 'actions/posts/likes.action';
+import Comments from 'components/comments/Comments';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,
@@ -30,7 +31,8 @@ class Post extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getLikeCount(this.props.match.params.postId);
-    this.props.getUserPostLikeStatus(this.props.match.params.postId);
+    if(this.props.auth.isAuthenticated)
+      this.props.getUserPostLikeStatus(this.props.match.params.postId);
   }
 
   render() {
@@ -48,18 +50,18 @@ class Post extends Component {
         <p className='lead'>Not Recommended: {post.dislikes}</p>
         {auth.user && auth.user.id === post.owner ? (
           post.active ? (
-            <button className='btn btn-danger' onClick={() => togglePost(post.id, false)}>
+            <button className='btn btn-danger mr-4' onClick={() => togglePost(post.id, false)}>
               Disable
             </button>
           ) : (
-            <button className='btn btn-primary' onClick={() => togglePost(post.id, true)}>
+            <button className='btn btn-primary mr-4' onClick={() => togglePost(post.id, true)}>
               Enable
             </button>
           )
         ) : null}
 
         <button
-          className={`ml-4 btn btn-${post.liked ? 'primary' : 'dark'}`}
+          className={`btn btn-${post.liked ? 'primary' : 'dark'}`}
           onClick={() => {
             post.liked ? removeLike(post.id) : likePost(post.id);
           }}
@@ -74,6 +76,8 @@ class Post extends Component {
         >
           Dislike
         </button>
+        <hr/>
+        <Comments postId={this.props.match.params.postId} />
       </div>
     ) : null;
   }
