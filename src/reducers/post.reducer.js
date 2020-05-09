@@ -59,7 +59,10 @@ export default (state = initialState, action) => {
           liked: true,
           disliked: false,
           likes: state.post.likes + 1,
-          dislikes: state.post.dislikes > 0 ? state.post.dislikes - 1 : state.post.dislikes,
+          dislikes:
+            state.post.dislikes > 0 && state.post.disliked
+              ? state.post.dislikes - 1
+              : state.post.dislikes,
         },
       };
 
@@ -70,7 +73,7 @@ export default (state = initialState, action) => {
           ...state.post,
           liked: false,
           disliked: true,
-          likes: state.post.likes > 0 ? state.post.likes - 1 : state.post.likes,
+          likes: state.post.likes > 0 && state.post.liked ? state.post.likes - 1 : state.post.likes,
           dislikes: state.post.dislikes + 1,
         },
       };
@@ -112,7 +115,7 @@ export default (state = initialState, action) => {
           ...action.payload,
         },
       };
-      
+
     default:
       return state;
   }

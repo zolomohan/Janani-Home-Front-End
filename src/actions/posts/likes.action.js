@@ -9,6 +9,7 @@ export const likePost = (id) => (dispatch) => {
     .then(() => dispatch({ type: POST.LIKES.LIKE, payload: id }))
     .catch((err) => console.log(err));
 };
+
 export const dislikePost = (id) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/posts/${id}/dislike/`, null, header.auth())
@@ -32,14 +33,14 @@ export const removeDislike = (id) => (dispatch) => {
 
 export const getLikeCount = (id) => (dispatch) => {
   axios
-    .get(`${SERVER_URL}/api/posts/${id}/likecount/`, header.auth())
+    .get(`${SERVER_URL}/api/posts/${id}/likecount/`)
     .then((res) => dispatch({ type: POST.LIKES.LIKECOUNT, payload: res.data }))
     .catch((err) => console.log(err));
 };
 
 export const getUserPostLikeStatus = (id) => (dispatch) => {
   axios
-    .get(`${SERVER_URL}/api/posts/${id}/likestatus/`, header.auth())
+    .get(`${SERVER_URL}/api/posts/${id}/userpostlike/`, header.auth())
     .then((res) => dispatch({ type: POST.LIKES.USERPOSTSTATUS, payload: res.data }))
     .catch((err) => console.log(err));
 };

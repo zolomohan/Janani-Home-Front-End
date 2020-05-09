@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPostList, togglePost } from 'actions/posts/posts.action';
+import { getLikeCount } from 'actions/posts/likes.action';
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer,
   posts: state.postReducer.postList,
 });
 
@@ -13,7 +13,7 @@ class PostList extends Component {
     this.props.getPostList();
   }
   render() {
-    const { auth, posts, togglePost } = this.props;
+    const { posts } = this.props;
     return (
       <div className='container my-5'>
         <h1>Posts</h1>
@@ -28,10 +28,7 @@ class PostList extends Component {
               <td>Collected Amount</td>
               <td>Due Date</td>
               <td>Verified</td>
-              <td>Recommended</td>
-              <td>Not Recommended</td>
               <td>Active</td>
-              <td>Disable</td>
             </tr>
           </thead>
           <tbody>
@@ -47,29 +44,7 @@ class PostList extends Component {
                 <td>{post.collected_amount}</td>
                 <td>{post.due_date}</td>
                 <td>{post.verified.toString()}</td>
-                <td>{post.recommended}</td>
-                <td>{post.not_recommended}</td>
                 <td>{post.active.toString()}</td>
-
-                <td>
-                  {auth.user && auth.user.id === post.owner ? (
-                    post.active ? (
-                      <button
-                        className='btn btn-danger btn-block'
-                        onClick={() => togglePost(post.id, false)}
-                      >
-                        Disable
-                      </button>
-                    ) : (
-                      <button
-                        className='btn btn-primary btn-block'
-                        onClick={() => togglePost(post.id, true)}
-                      >
-                        Enable
-                      </button>
-                    )
-                  ) : null}
-                </td>
               </tr>
             ))}
           </tbody>
@@ -79,4 +54,4 @@ class PostList extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getPostList, togglePost })(PostList);
+export default connect(mapStateToProps, { getPostList, togglePost, getLikeCount })(PostList);
