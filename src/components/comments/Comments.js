@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getComments, addComment, disableComment } from 'actions/posts/comments.action';
 
 const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
   comments: state.postReducer.post.comments,
 });
 
@@ -14,8 +15,11 @@ class CommentList extends Component {
   onChange = (event) => this.setState({ [event.target.id]: event.target.value });
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.addComment(this.props.postId, this.state);
-    this.setState({comment: ''})
+    if (!this.props.isAuthenticated) this.props.history.push('/login');
+    else {
+      this.props.addComment(this.props.postId, this.state);
+      this.setState({ comment: '' });
+    }
   };
   componentDidMount() {
     this.props.getComments(this.props.postId);
@@ -42,7 +46,9 @@ class CommentList extends Component {
           <div>
             <h6>{comment.user}</h6>
             <p className='lead'>{comment.body}</p>
-            <button className="btn btn-info" onClick={() => this.props.disableComment(comment.id)}>Disable</button>
+            <button className='btn btn-info' onClick={() => this.props.disableComment(comment.id)}>
+              Disable
+            </button>
             <hr />
           </div>
         ))}

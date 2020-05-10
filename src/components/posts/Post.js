@@ -31,8 +31,7 @@ class Post extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
     this.props.getLikeCount(this.props.match.params.postId);
-    if(this.props.auth.isAuthenticated)
-      this.props.getUserPostLikeStatus(this.props.match.params.postId);
+    this.props.getUserPostLikeStatus(this.props.match.params.postId);
   }
 
   render() {
@@ -63,7 +62,11 @@ class Post extends Component {
         <button
           className={`btn btn-${post.liked ? 'primary' : 'dark'}`}
           onClick={() => {
-            post.liked ? removeLike(post.id) : likePost(post.id);
+            !this.props.auth.isAuthenticated
+              ? this.props.history.push('/login')
+              : post.liked
+              ? removeLike(post.id)
+              : likePost(post.id);
           }}
         >
           Like
@@ -71,13 +74,17 @@ class Post extends Component {
         <button
           className={`ml-4 btn btn-${post.disliked ? 'primary' : 'dark'}`}
           onClick={() => {
-            post.disliked ? removeDislike(post.id) : dislikePost(post.id);
+            !this.props.auth.isAuthenticated
+              ? this.props.history.push('/login')
+              : post.disliked
+              ? removeDislike(post.id)
+              : dislikePost(post.id);
           }}
         >
           Dislike
         </button>
-        <hr/>
-        <Comments postId={this.props.match.params.postId} />
+        <hr />
+        <Comments postId={this.props.match.params.postId} history={this.props.history} />
       </div>
     ) : null;
   }

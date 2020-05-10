@@ -138,7 +138,7 @@ export default (state = initialState, action) => {
         ...state,
         post: {
           ...state.post,
-          comments: state.post.comments.filter((comment) => comment.id != action.payload),
+          comments: state.post.comments.filter((comment) => comment.id !== action.payload),
         },
       };
     default:
