@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getComments, addComment, disableComment } from 'actions/posts/comments.action';
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.authReducer.isAuthenticated,
+  auth: state.authReducer,
   comments: state.postReducer.post.comments,
 });
 
@@ -15,7 +15,7 @@ class CommentList extends Component {
   onChange = (event) => this.setState({ [event.target.id]: event.target.value });
   onSubmit = (event) => {
     event.preventDefault();
-    if (!this.props.isAuthenticated) this.props.history.push('/login');
+    if (!this.props.auth.isAuthenticated) this.props.history.push('/login');
     else {
       this.props.addComment(this.props.postId, this.state);
       this.setState({ comment: '' });
@@ -25,6 +25,7 @@ class CommentList extends Component {
     this.props.getComments(this.props.postId);
   }
   render() {
+    const { auth, disableComment } = this.props;
     return (
       <div>
         <h3>Comments</h3>
@@ -43,12 +44,14 @@ class CommentList extends Component {
           </div>
         </form>
         {this.props.comments.map((comment) => (
-          <div>
+          <div key={comment.id}>
             <h6>{comment.user}</h6>
             <p className='lead'>{comment.body}</p>
-            <button className='btn btn-info' onClick={() => this.props.disableComment(comment.id)}>
-              Disable
-            </button>
+            {auth.isAuthenticated && auth.user.username === comment.user && (
+              <button className='btn btn-info' onClick={() => disableComment(comment.id)}>
+                Disable
+              </button>
+            )}
             <hr />
           </div>
         ))}

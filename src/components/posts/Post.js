@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { togglePost, getPost } from 'actions/posts/posts.action';
-import {
-  likePost,
-  dislikePost,
-  removeLike,
-  removeDislike,
-  getUserPostLikeStatus,
-  getLikeCount,
-} from 'actions/posts/likes.action';
+import { likePost, dislikePost, removeLike, removeDislike } from 'actions/posts/likes.action';
 import Comments from 'components/comments/Comments';
 
 const mapStateToProps = (state) => ({
@@ -23,15 +16,11 @@ const mapActionToProps = {
   dislikePost,
   removeLike,
   removeDislike,
-  getUserPostLikeStatus,
-  getLikeCount,
 };
 
 class Post extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
-    this.props.getLikeCount(this.props.match.params.postId);
-    this.props.getUserPostLikeStatus(this.props.match.params.postId);
   }
 
   render() {
@@ -47,7 +36,7 @@ class Post extends Component {
         <p className='lead'>Verified: {post.verified ? 'True' : 'False'}</p>
         <p className='lead'>Recommended: {post.likes}</p>
         <p className='lead'>Not Recommended: {post.dislikes}</p>
-        {auth.user && auth.user.id === post.owner ? (
+        {auth.user && auth.user.username === post.owner ? (
           post.active ? (
             <button className='btn btn-danger mr-4' onClick={() => togglePost(post.id, false)}>
               Disable
@@ -60,11 +49,11 @@ class Post extends Component {
         ) : null}
 
         <button
-          className={`btn btn-${post.liked ? 'primary' : 'dark'}`}
+          className={`btn btn-${post.user_liked ? 'primary' : 'dark'}`}
           onClick={() => {
             !this.props.auth.isAuthenticated
               ? this.props.history.push('/login')
-              : post.liked
+              : post.user_liked
               ? removeLike(post.id)
               : likePost(post.id);
           }}
@@ -72,11 +61,11 @@ class Post extends Component {
           Like
         </button>
         <button
-          className={`ml-4 btn btn-${post.disliked ? 'primary' : 'dark'}`}
+          className={`ml-4 btn btn-${post.user_disliked ? 'primary' : 'dark'}`}
           onClick={() => {
             !this.props.auth.isAuthenticated
               ? this.props.history.push('/login')
-              : post.disliked
+              : post.user_disliked
               ? removeDislike(post.id)
               : dislikePost(post.id);
           }}

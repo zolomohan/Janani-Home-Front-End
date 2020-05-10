@@ -2,8 +2,6 @@ import { POST } from 'actions/types';
 
 const initialState = {
   post: {
-    liked: false,
-    disliked: false,
     comments: [],
   },
   postList: [],
@@ -59,11 +57,11 @@ export default (state = initialState, action) => {
         ...state,
         post: {
           ...state.post,
-          liked: true,
-          disliked: false,
+          user_liked: true,
+          user_disliked: false,
           likes: state.post.likes + 1,
           dislikes:
-            state.post.dislikes > 0 && state.post.disliked
+            state.post.dislikes > 0 && state.post.user_disliked
               ? state.post.dislikes - 1
               : state.post.dislikes,
         },
@@ -74,9 +72,9 @@ export default (state = initialState, action) => {
         ...state,
         post: {
           ...state.post,
-          liked: false,
-          disliked: true,
-          likes: state.post.likes > 0 && state.post.liked ? state.post.likes - 1 : state.post.likes,
+          user_liked: false,
+          user_disliked: true,
+          likes: state.post.likes > 0 && state.post.user_liked ? state.post.likes - 1 : state.post.likes,
           dislikes: state.post.dislikes + 1,
         },
       };
@@ -87,7 +85,7 @@ export default (state = initialState, action) => {
         post: {
           ...state.post,
           likes: state.post.likes - 1,
-          liked: false,
+          user_liked: false,
         },
       };
 
@@ -97,25 +95,7 @@ export default (state = initialState, action) => {
         post: {
           ...state.post,
           dislikes: state.post.dislikes - 1,
-          disliked: false,
-        },
-      };
-
-    case POST.LIKES.USERPOSTSTATUS:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          ...action.payload,
-        },
-      };
-
-    case POST.LIKES.LIKECOUNT:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          ...action.payload,
+          user_disliked: false,
         },
       };
 

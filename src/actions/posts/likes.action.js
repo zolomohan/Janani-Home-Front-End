@@ -31,17 +31,3 @@ export const removeDislike = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const getLikeCount = (id) => (dispatch) => {
-  axios
-    .get(`${SERVER_URL}/api/posts/${id}/likecount/`)
-    .then((res) => dispatch({ type: POST.LIKES.LIKECOUNT, payload: res.data }))
-    .catch((err) => console.log(err));
-};
-
-export const getUserPostLikeStatus = (id) => (dispatch) => {
-  axios
-    .get(`${SERVER_URL}/api/posts/${id}/userpostlike/`, header.auth())
-    .then((res) => dispatch({ type: POST.LIKES.USERPOSTSTATUS, payload: res.data }))
-    .catch((err) => console.log(err));
-};
-

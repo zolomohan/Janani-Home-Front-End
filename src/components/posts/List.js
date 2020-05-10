@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPostList, togglePost } from 'actions/posts/posts.action';
-import { getLikeCount } from 'actions/posts/likes.action';
 
 const mapStateToProps = (state) => ({
   posts: state.postReducer.postList,
@@ -54,4 +53,4 @@ class PostList extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getPostList, togglePost, getLikeCount })(PostList);
+export default connect(mapStateToProps, { getPostList, togglePost })(PostList);

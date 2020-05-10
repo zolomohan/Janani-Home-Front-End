@@ -5,7 +5,7 @@ import header from 'helpers/ajaxHeaders';
 
 export const getPost = (id) => (dispatch) => {
   axios
-    .get(`${SERVER_URL}/api/posts/${id}/`)
+    .get(`${SERVER_URL}/api/posts/${id}/`, header.auth())
     .then((res) => dispatch({ type: POST.GET, payload: res.data }))
     .catch((err) => console.log(err));
 };
