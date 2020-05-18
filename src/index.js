@@ -8,6 +8,9 @@ import * as serviceWorker from 'helpers/serviceWorker';
 import { Provider as ReduxProvider } from 'react-redux';
 import store from 'store';
 
+import 'lib/bootstrap.min.css';
+import 'semantic-ui-css/semantic.min.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>

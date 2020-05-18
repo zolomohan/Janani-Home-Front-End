@@ -47,6 +47,7 @@ class CommentList extends Component {
           <div key={comment.id}>
             <h6>{comment.user}</h6>
             <p className='lead'>{comment.body}</p>
+            <p>{comment.created_at}</p>
             {auth.isAuthenticated && auth.user.username === comment.user && (
               <button className='btn btn-info' onClick={() => disableComment(comment.id)}>
                 Disable
