@@ -37,7 +37,9 @@ class PostList extends Component {
               {posts.map((post) => (
                 <tr key={post.id}>
                   <td>{post.id}</td>
-                  <td>{post.owner}</td>
+                  <td>
+                    <Link to={`/user/${post.owner}`}>{post.owner}</Link>
+                  </td>
                   <td>
                     <Link to={`/post/${post.id}`}>{post.title}</Link>
                   </td>

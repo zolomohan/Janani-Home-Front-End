@@ -7,8 +7,10 @@ import NewPost from 'components/posts/NewPost';
 import Login from 'components/auth/Login';
 import Register from 'components/auth/Register';
 import Post from 'components/posts/Post';
+import Profile from 'components/profile/Profile'
 import { loadUser } from 'actions/auth.action';
 import { getPostList } from 'actions/posts/posts.action';
+import NewProfile from './profile/NewProfile';
 
 const mapStateToProps = (state) => ({
   posts: state.postReducer.postList,
@@ -27,6 +29,8 @@ class App extends Component {
         <Route exact path='/' component={PostList} />
         <PrivateRoute exact path='/post/new' component={NewPost} />
         <Route exact path='/post/:postId' component={Post} />
+        <Route exact path='/user/profile/create' component={NewProfile} />
+        <Route exact path='/user/:username' component={Profile} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
       </Switch>

@@ -43,7 +43,10 @@ class Navbar extends Component {
               <Nav.Link href='#register'>Register</Nav.Link>
             </Fragment>
           ) : (
-            <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
+            <Fragment>
+              <Nav.Link href={`#user/${auth.user.username}`}>Dashboard</Nav.Link>
+              <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
+            </Fragment>
           )}
         </Nav>
       </BootstrapNavbar>
