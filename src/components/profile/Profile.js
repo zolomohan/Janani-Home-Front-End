@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import Navbar from 'components/common/Navbar';
 import { Link, Redirect } from 'react-router-dom';
-
+import store from 'store';
 import { connect } from 'react-redux';
 import { getProfile } from 'actions/profile.action';
-import { getUserPostList } from 'actions/posts/posts.action';
+import { getUserPostList, getDisabledPostList } from 'actions/posts/posts.action';
+import { POST } from 'actions/types';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,
   posts: state.postReducer.userPostList,
 });
 
+const mapActionToProps = {
+  getProfile,
+  getUserPostList,
+  getDisabledPostList,
+};
+
 class Dashboard extends Component {
   componentDidMount() {
-    const { getProfile, getUserPostList, match } = this.props;
+    const { getProfile, getUserPostList, getDisabledPostList, match } = this.props;
     getProfile(match.params.username);
     getUserPostList(match.params.username);
+    getDisabledPostList(match.params.username);
+  }
+
+  componentWillUnmount() {
+    store.dispatch({ type: POST.CLEAR.USER });
   }
 
   render() {
@@ -65,7 +77,7 @@ class Dashboard extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {posts.map((post) => (
+                  {posts.active.map((post) => (
                     <tr key={post.id}>
                       <td>{post.id}</td>
                       <td>{post.owner}</td>
@@ -82,6 +94,43 @@ class Dashboard extends Component {
                   ))}
                 </tbody>
               </table>
+              {posts.disabled.length != 0 && (
+                <div className='disabled'>
+                  <h1>Disabled Posts</h1>
+                  <table className='table table-stripped table-bordered'>
+                    <thead>
+                      <tr>
+                        <td>ID</td>
+                        <td>User</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>Required Amount</td>
+                        <td>Collected Amount</td>
+                        <td>Due Date</td>
+                        <td>Verified</td>
+                        <td>Active</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {posts.disabled.map((post) => (
+                        <tr key={post.id}>
+                          <td>{post.id}</td>
+                          <td>{post.owner}</td>
+                          <td>
+                            <Link to={`/post/${post.id}`}>{post.title}</Link>
+                          </td>
+                          <td>{post.description}</td>
+                          <td>{post.required_amount}</td>
+                          <td>{post.collected_amount}</td>
+                          <td>{post.due_date}</td>
+                          <td>{post.verified.toString()}</td>
+                          <td>{post.active.toString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -90,4 +139,4 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(mapStateToProps, { getProfile, getUserPostList })(Dashboard);
+export default connect(mapStateToProps, mapActionToProps)(Dashboard);

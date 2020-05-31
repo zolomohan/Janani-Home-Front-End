@@ -17,10 +17,17 @@ export const getPostList = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const getUserPostList = (user_id) => (dispatch) => {
+export const getUserPostList = (username) => (dispatch) => {
   axios
-    .get(`${SERVER_URL}/api/posts/${user_id}/user`)
-    .then((res) => dispatch({ type: POST.USERLIST, payload: res.data }))
+    .get(`${SERVER_URL}/api/posts/${username}/active`)
+    .then((res) => dispatch({ type: POST.USER.ACTIVE, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
+export const getDisabledPostList = (username) => (dispatch) => {
+  axios
+    .get(`${SERVER_URL}/api/posts/${username}/disabled`, header.auth())
+    .then((res) => dispatch({ type: POST.USER.DISABLED, payload: res.data }))
     .catch((err) => console.log(err));
 };
 

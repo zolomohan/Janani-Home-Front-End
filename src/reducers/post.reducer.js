@@ -5,7 +5,10 @@ const initialState = {
     comments: [],
   },
   postList: [],
-  userPostList: []
+  userPostList: {
+    active: [],
+    disabled: [],
+  },
 };
 
 export default (state = initialState, action) => {
@@ -25,10 +28,22 @@ export default (state = initialState, action) => {
         postList: action.payload,
       };
 
-    case POST.USERLIST:
+    case POST.USER.ACTIVE:
       return {
         ...state,
-        userPostList: action.payload
+        userPostList: {
+          ...state.userPostList,
+          active: action.payload
+        },
+      };
+
+    case POST.USER.DISABLED:
+      return {
+        ...state,
+        userPostList: {
+          ...state.userPostList,
+          disabled: action.payload
+        }
       }
 
     case POST.ADD:
@@ -81,7 +96,8 @@ export default (state = initialState, action) => {
           ...state.post,
           user_liked: false,
           user_disliked: true,
-          likes: state.post.likes > 0 && state.post.user_liked ? state.post.likes - 1 : state.post.likes,
+          likes:
+            state.post.likes > 0 && state.post.user_liked ? state.post.likes - 1 : state.post.likes,
           dislikes: state.post.dislikes + 1,
         },
       };
@@ -128,6 +144,16 @@ export default (state = initialState, action) => {
           comments: state.post.comments.filter((comment) => comment.id !== action.payload),
         },
       };
+
+    // Clear State
+    case POST.CLEAR.USER:
+      return {
+        ...state,
+        userPostList: {
+          active: [],
+          disabled: []
+        }
+      }
     default:
       return state;
   }

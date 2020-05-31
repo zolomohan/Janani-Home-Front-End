@@ -18,9 +18,5 @@ export const createProfile = (profile) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/profile/`, profile, header.auth())
     .then((res) => dispatch({ type: PROFILE.ADD, payload: res.data }))
-    .catch((err) => {
-      if (err.response.data.profile === 'Profile Does Not Exist')
-        dispatch({ type: PROFILE.PROFILE404 });
-      console.log(err.response.data);
-    });
+    .catch((err) => console.log(err.response.data));
 };
