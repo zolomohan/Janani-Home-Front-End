@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Navbar from 'components/common/Navbar';
 import { createProfile } from 'actions/profile.action';
+import { Redirect } from 'react-router-dom';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,
@@ -43,6 +44,8 @@ class CreateProfile extends Component {
   };
 
   render() {
+    if (!this.props.auth.profileDoesNotExist)
+      return <Redirect to={`/user/${this.props.auth.user.username}`} />;
     return (
       <Fragment>
         <Navbar />

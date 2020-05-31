@@ -27,9 +27,9 @@ class Dashboard extends Component {
   }
 
   componentWillUnmount() {
-    store.dispatch({ type: POST.CLEAR.USER });
     if(this.props.auth.profileDoesNotExist)
       store.dispatch({type: PROFILE.REVERT404})
+    store.dispatch({ type: POST.CLEAR.USER });
   }
 
   render() {
