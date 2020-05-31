@@ -33,6 +33,7 @@ export const POST = {
     DISABLE: 'COMMENT_DISABLED',
   },
   CLEAR: {
-    USER: 'CLEAR_USER_POST_LIST'
+    USER: 'CLEAR_USER_POST_LIST',
+    POST: 'CLEAR_POST_VIEW'
   },
 };

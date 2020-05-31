@@ -154,6 +154,13 @@ export default (state = initialState, action) => {
           disabled: []
         }
       }
+    case POST.CLEAR.POST:
+      return {
+        ...state,
+        post: {
+          comments: []
+        }
+      }
     default:
       return state;
   }

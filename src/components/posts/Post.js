@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import store from 'store';
+import { POST } from 'actions/types';
 import { connect } from 'react-redux';
 import { togglePost, getPost } from 'actions/posts/posts.action';
 import { likePost, dislikePost, removeLike, removeDislike } from 'actions/posts/likes.action';
@@ -22,6 +24,10 @@ const mapActionToProps = {
 class Post extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.postId);
+  }
+
+  componentWillUnmount() {
+    store.dispatch({ type: POST.CLEAR.POST });
   }
 
   render() {
