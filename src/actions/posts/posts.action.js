@@ -17,6 +17,13 @@ export const getPostList = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const getUserPostList = (user_id) => (dispatch) => {
+  axios
+    .get(`${SERVER_URL}/api/posts/${user_id}/user`)
+    .then((res) => dispatch({ type: POST.USERLIST, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
 export const addPost = (post) => (dispatch) => {
   axios
     .post(`${SERVER_URL}/api/posts/`, JSON.stringify(post), header.auth())

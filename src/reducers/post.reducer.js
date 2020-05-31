@@ -5,6 +5,7 @@ const initialState = {
     comments: [],
   },
   postList: [],
+  userPostList: []
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +24,12 @@ export default (state = initialState, action) => {
         ...state,
         postList: action.payload,
       };
+
+    case POST.USERLIST:
+      return {
+        ...state,
+        userPostList: action.payload
+      }
 
     case POST.ADD:
       return {

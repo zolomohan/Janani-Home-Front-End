@@ -4,12 +4,14 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
+  PROFILE,
 } from 'actions/types';
 
 const initialState = {
   user: null,
   isAuthenticated: false,
   token: localStorage.getItem('token'),
+  profileDoesNotExist: false
 };
 
 export default (state = initialState, action) => {
@@ -38,6 +40,22 @@ export default (state = initialState, action) => {
         token: null,
         isAuthenticated: false,
       };
+
+    case PROFILE.GET:
+      return {
+        ...state,
+        user: {
+          ...action.payload,
+          ...state.user,
+        },
+        profileDoesNotExist: false
+      }
+
+    case PROFILE.PROFILE404:
+      return {
+        ...state,
+        profileDoesNotExist: true
+      }
 
     default:
       return state;
