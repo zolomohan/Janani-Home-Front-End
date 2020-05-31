@@ -1,30 +1,23 @@
-import {
-  AUTH_FAIL,
-  USER_LOADED,
-  LOGIN_SUCCESS,
-  LOGOUT_SUCCESS,
-  REGISTER_SUCCESS,
-  PROFILE,
-} from 'actions/types';
+import { AUTH, PROFILE } from 'actions/types';
 
 const initialState = {
   user: null,
   isAuthenticated: false,
   token: localStorage.getItem('token'),
-  profileDoesNotExist: false
+  profileDoesNotExist: false,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOADED:
+    case AUTH.LOADUSER:
       return {
         ...state,
         user: action.payload,
         isAuthenticated: true,
       };
 
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
+    case AUTH.LOGIN:
+    case AUTH.REGISTER:
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -32,8 +25,8 @@ export default (state = initialState, action) => {
         isAuthenticated: true,
       };
 
-    case AUTH_FAIL:
-    case LOGOUT_SUCCESS:
+    case AUTH.FAIL:
+    case AUTH.LOGOUT:
       localStorage.removeItem('token');
       return {
         user: null,
@@ -48,13 +41,19 @@ export default (state = initialState, action) => {
           ...action.payload,
           ...state.user,
         },
-        profileDoesNotExist: false
-      }
+        profileDoesNotExist: false,
+      };
 
     case PROFILE.PROFILE404:
       return {
         ...state,
-        profileDoesNotExist: true
+        profileDoesNotExist: true,
+      };
+
+    case PROFILE.REVERT404:
+      return {
+        ...state,
+        profileDoesNotExist: false
       }
 
     default:

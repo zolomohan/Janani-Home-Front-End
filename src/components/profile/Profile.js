@@ -5,7 +5,7 @@ import store from 'store';
 import { connect } from 'react-redux';
 import { getProfile } from 'actions/profile.action';
 import { getUserPostList, getDisabledPostList } from 'actions/posts/posts.action';
-import { POST } from 'actions/types';
+import { POST, PROFILE } from 'actions/types';
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer,
@@ -28,6 +28,8 @@ class Dashboard extends Component {
 
   componentWillUnmount() {
     store.dispatch({ type: POST.CLEAR.USER });
+    if(this.props.auth.profileDoesNotExist)
+      store.dispatch({type: PROFILE.REVERT404})
   }
 
   render() {
